@@ -81,7 +81,7 @@ export function TokenSearch() {
             <Button
               variant={"ghost"}
               onClick={closeDialog}
-              className="hover:bg-transparent hover:text-slate-500"
+              className="hover:bg-transparent hover:text-slate-500 p-0"
             >
               <CircleX />
             </Button>
