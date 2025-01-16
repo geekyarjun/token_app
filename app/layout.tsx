@@ -5,6 +5,8 @@ import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
 import { Header } from "@/components/layout";
 import { cn } from "@/lib/utils";
+import AuthDialog from "@/components/auth/auth-dialog";
+import AuthProvider from "@/contexts/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,10 +24,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, "h-screen")}>
         <Providers>
-          <Header />
-          <main style={{ height: `calc(100% - 56px)` }} className="px-[10px]">
-            {children}
-          </main>
+          <AuthProvider>
+            <Header />
+            <main style={{ height: `calc(100% - 56px)` }} className="px-[10px]">
+              {children}
+            </main>
+            <AuthDialog />
+          </AuthProvider>
         </Providers>
         <Toaster />
       </body>

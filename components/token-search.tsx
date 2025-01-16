@@ -11,8 +11,12 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { SearchTokenData } from "@/types/api";
+import { useAccount } from "wagmi";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function TokenSearch() {
+  const { setOpenAuthModal } = useAuth()!;
+  const { isConnected } = useAccount();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
@@ -48,10 +52,18 @@ export function TokenSearch() {
     router.push(`/eth/token/${token.address}`);
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!isConnected) {
+      e.preventDefault();
+      setOpenAuthModal(true);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
+          onClick={handleClick}
           variant="secondary"
           className="2xl:w-[275px] lg:w-[225px] justify-start text-left font-normal border px-2 lg:px-4"
         >

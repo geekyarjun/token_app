@@ -10,7 +10,7 @@ export const Header = () => {
       <Link href={"/"}>
         <Image src={Logo} alt="xDEX Logo" width={37} height={37} />
       </Link>
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
         <TokenSearch />
         <ConnectButton />
       </div>

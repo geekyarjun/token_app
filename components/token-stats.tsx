@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { formatWithUnits } from "@/lib/utils";
+import { formatNumber, formatWithUnits } from "@/lib/utils";
 import { TokenData } from "@/types/api";
 import Image from "next/image";
 
@@ -17,42 +9,8 @@ interface TokenStatsProps {
   data?: TokenData;
 }
 
-export function TokenStats({ loading, data }: TokenStatsProps) {
-  if (loading) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <Card key={i}>
-            <CardHeader>
-              <CardTitle>
-                <Skeleton className="h-4 w-24" />
-              </CardTitle>
-              <CardDescription>
-                <Skeleton className="h-3 w-16" />
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Skeleton className="h-8 w-32" />
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    );
-  }
-
+export function TokenStats({ data }: TokenStatsProps) {
   if (!data) return null;
-
-  const formatNumber = (
-    num: number,
-    style: "currency" | "percent" = "currency"
-  ) => {
-    return new Intl.NumberFormat("en-US", {
-      style,
-      currency: "USD",
-      minimumFractionDigits: style === "percent" ? 2 : 2,
-      maximumFractionDigits: style === "percent" ? 2 : 2,
-    }).format(style === "percent" ? num / 100 : num);
-  };
 
   const basicStats = [
     { title: "Price", value: formatNumber(data.price) },
