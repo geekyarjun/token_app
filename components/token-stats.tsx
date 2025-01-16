@@ -12,20 +12,32 @@ interface TokenStatsProps {
 export function TokenStats({ data }: TokenStatsProps) {
   if (!data) return null;
 
+  const price = formatNumber(data?.price);
+  const marketCap = formatNumber(data?.marketCap);
+  const fdv = formatWithUnits(data?.fdv);
+  const change24h = formatNumber(data?.priceChange24h, "percent");
+  const volume24h = formatWithUnits(data?.volume24h);
+  const totalLiquidity = formatNumber(data?.totalLiquidity);
+  const totalSupply = formatWithUnits(data?.totalSupply, data?.decimals);
+
   const basicStats = [
-    { title: "Price", value: formatNumber(data.price) },
-    { title: "Market Cap", value: formatNumber(data.marketCap) },
-    { title: "FDV", value: formatWithUnits(data.fdv) },
+    { title: "Price", value: price },
+    { title: "Market Cap", value: marketCap },
+    { title: "FDV", value: fdv },
     {
-      title: "24h Change",
-      value: formatNumber(data.priceChange24h, "percent"),
-      change: data.priceChange24h,
+      title: "24H Change",
+      value:
+        data.priceChange24h > 0 ? (
+          <span className="text-green-400">+ {change24h}</span>
+        ) : (
+          <span className="text-red-400">- {change24h}</span>
+        ),
     },
-    { title: "24h Volume", value: formatWithUnits(data.volume24h) },
-    { title: "Total Liquidity", value: formatNumber(data.totalLiquidity) },
+    { title: "24h Volume", value: volume24h },
+    { title: "Total Liquidity", value: totalLiquidity },
     {
       title: "Total Supply",
-      value: formatWithUnits(data.totalSupply, data.decimals),
+      value: totalSupply,
     },
   ];
 

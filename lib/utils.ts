@@ -49,6 +49,8 @@ export const formatNumber = (
   num: number,
   style: "currency" | "percent" = "currency"
 ) => {
+  if (!num) return 0;
+
   return new Intl.NumberFormat("en-US", {
     style,
     currency: "USD",
